@@ -6,36 +6,55 @@
     <title>Para Mili</title>
     <style>
         body { 
-    margin: 0; 
-    padding: 0; 
-    height: 100vh; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    font-family: 'Segoe UI', sans-serif; 
-    background-size: cover; 
-    background-position: center center; 
-    background-repeat: no-repeat; 
-    background-attachment: fixed; 
-    transition: background-image 0.5s; 
-    background-color: #f0f0f0; 
-}
-        
-        #capa-oscura { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); z-index: 1; display: none; }
-        #contenedor { position: relative; z-index: 2; background: rgba(255, 255, 255, 0.95); padding: 25px; border-radius: 20px; width: 85%; max-width: 450px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        #boton-volver { position: absolute; top: 15px; left: 15px; background: none; border: none; color: #d63384; font-size: 1.2rem; cursor: pointer; display: none; font-weight: bold; }
+            margin: 0; padding: 0; height: 100vh; display: flex; 
+            justify-content: center; align-items: center; 
+            font-family: 'Segoe UI', sans-serif; background-size: cover; 
+            background-position: center center; background-repeat: no-repeat;
+            background-attachment: fixed; transition: background-image 0.5s; 
+            background-color: #f0f0f0; overflow: hidden;
+        }
+        #capa-oscura { 
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.4); z-index: 1; display: none; 
+        }
+        #contenedor { 
+            position: relative; z-index: 2; background: rgba(255, 255, 255, 0.95); 
+            padding: 25px; border-radius: 20px; width: 85%; max-width: 450px; 
+            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: max-width 0.5s ease;
+        }
+        #boton-volver { 
+            position: absolute; top: 15px; left: 15px; background: none; 
+            border: none; color: #d63384; font-size: 1.2rem; cursor: pointer; 
+            display: none; font-weight: bold; 
+        }
         h2 { font-size: 1.1rem; color: #333; line-height: 1.6; white-space: pre-line; margin-top: 30px; }
         .botones-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
-        button.opcion { padding: 15px; font-size: 16px; border: none; border-radius: 10px; background-color: #d63384; color: white; cursor: pointer; transition: transform 0.2s; }
+        button.opcion { 
+            padding: 15px; font-size: 14px; border: none; border-radius: 10px; 
+            background-color: #d63384; color: white; cursor: pointer; transition: transform 0.2s; 
+        }
         button.opcion:active { transform: scale(0.95); }
+
+        /* Diseño especial para Video x Texto */
+        .flex-video { display: flex; flex-direction: row; align-items: center; gap: 20px; text-align: left; }
+        video { border-radius: 15px; max-height: 60vh; background: #000; }
+        
+        @media (max-width: 600px) {
+            .flex-video { flex-direction: column; text-align: center; }
+            video { width: 100%; max-height: 40vh; }
+            #contenedor { width: 90%; padding: 15px; }
+        }
     </style>
 </head>
 <body>
     <div id="capa-oscura"></div>
     <div id="contenedor">
         <button id="boton-volver">← Volver</button>
-        <h2 id="texto-pregunta">Cargando...</h2>
-        <div id="botones" class="botones-container"></div>
+        <div id="contenido-dinamico">
+            <h2 id="texto-pregunta">Cargando...</h2>
+            <div id="botones" class="botones-container"></div>
+        </div>
     </div>
 
     <script>
@@ -91,43 +110,93 @@
             pantalla5: {
                 texto: "He aquí una de nuestras primeras grandes aventuras, nos conocimos en varios niveles. De 0 pasamos a compartir chistes, aventuras por el campo y también espacios espirituales pero este fue un regalo muy especial. No hablo del rompecabezas sino de la notita con la que venia. Ese día mi corazón se derritió de amor (no iba a ser la ultima vez).",
                 imagen: "aaafoto3.jpeg",
-                opciones: [{ texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "inicio" }],
+                opciones: [{ texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "pantalla6" }],
                 anterior: "pantalla4"
+            },
+            pantalla6: {
+                texto: "Mi regalo no es el rompecabezas sino el tiempo que nos lleve armarlo",
+                imagen: "aaafoto10.jpeg",
+                efectoX4: true,
+                opciones: [{ texto: "La verdad que soy re tierna si", siguiente: "pantalla7" }],
+                anterior: "pantalla5"
+            },
+            pantalla7: {
+                texto: "Pasamos cumpleaños juntos, el retiro, distancia de viajes, aprendimos a tomar aperols, bastoncitos de muzarella, pasamos por lugares como el mercado norte y tambien Potrerillo de Larreta. 10 meses o 10 dias o 10 años, ya no se",
+                imagen: "aaafoto8.png",
+                opciones: [{ texto: "la vida pasa", siguiente: "pantalla8" }],
+                anterior: "pantalla6"
+            },
+            pantalla8: {
+                texto: "Este video es nuevo pero con esa remera y nuestra actitud se representan estos meses que hemos vivido juntos",
+                video: "aaavideo1.mp4",
+                opciones: [
+                    { texto: "¿Aprendiste a programar para todo esto?", siguiente: "pantalla9" },
+                    { texto: "No puedo creer que me regalaste esa remera", siguiente: "pantalla9" },
+                    { texto: "Sos un idiota pero se que me queres mucho", siguiente: "pantalla9" }
+                ],
+                anterior: "pantalla7"
             }
         };
 
-        const btnVolver = document.getElementById('boton-volver');
-
         function mostrarEscena(nombre) {
             const escena = escenas[nombre];
-            if (escena.imagen && escena.imagen !== "") {
+            const contenedor = document.getElementById('contenedor');
+            const din = document.getElementById('contenido-dinamico');
+            const btnVolver = document.getElementById('boton-volver');
+
+            // Reset de estilos de fondo
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundRepeat = "no-repeat";
+
+            if (escena.imagen) {
                 document.body.style.backgroundImage = "url('" + escena.imagen + "')";
-                document.body.style.backgroundColor = "transparent";
                 document.getElementById('capa-oscura').style.display = "block";
+                if (escena.efectoX4) {
+                    document.body.style.backgroundSize = "50% 50%";
+                    document.body.style.backgroundRepeat = "repeat";
+                }
             } else {
                 document.body.style.backgroundImage = "none";
                 document.body.style.backgroundColor = "#ffffff";
                 document.getElementById('capa-oscura').style.display = "none";
             }
-            
-            if (escena.anterior) {
-                btnVolver.style.display = "block";
-                btnVolver.onclick = () => mostrarEscena(escena.anterior);
-            } else {
-                btnVolver.style.display = "none";
-            }
 
-            document.getElementById('texto-pregunta').innerText = escena.texto;
-            const divBotones = document.getElementById('botones');
-            divBotones.innerHTML = ''; 
-            
-            escena.opciones.forEach(op => {
-                const btn = document.createElement('button');
-                btn.innerText = op.texto;
-                btn.className = 'opcion';
-                btn.onclick = () => mostrarEscena(op.siguiente);
-                divBotones.appendChild(btn);
-            });
+            // Manejo del botón volver
+            btnVolver.style.display = escena.anterior ? "block" : "none";
+            btnVolver.onclick = () => {
+                contenedor.style.maxWidth = "450px";
+                mostrarEscena(escena.anterior);
+            };
+
+            // Construcción del contenido (Diferenciar Pantalla 8)
+            if (escena.video) {
+                contenedor.style.maxWidth = "800px";
+                din.innerHTML = `
+                    <div class="flex-video">
+                        <video src="${escena.video}" autoplay controls></video>
+                        <div>
+                            <h2>${escena.texto}</h2>
+                            <div id="btns-din" class="botones-container"></div>
+                        </div>
+                    </div>`;
+                const contBtns = document.getElementById('btns-din');
+                escena.opciones.forEach(op => {
+                    const b = document.createElement('button');
+                    b.innerText = op.texto; b.className = 'opcion';
+                    b.onclick = () => { contenedor.style.maxWidth = "450px"; mostrarEscena(op.siguiente); };
+                    contBtns.appendChild(b);
+                });
+            } else {
+                contenedor.style.maxWidth = "450px";
+                din.innerHTML = `<h2 id="texto-pregunta">${escena.texto}</h2><div id="btns-din" class="botones-container"></div>`;
+                const contBtns = document.getElementById('btns-din');
+                escena.opciones.forEach(op => {
+                    const b = document.createElement('button');
+                    b.innerText = op.texto; b.className = 'opcion';
+                    b.onclick = () => mostrarEscena(op.siguiente);
+                    contBtns.appendChild(b);
+                });
+            }
         }
         mostrarEscena('inicio');
     </script>
