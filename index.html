@@ -16,14 +16,15 @@
             background-size: cover;
             background-position: center;
             transition: background-image 0.5s ease-in-out;
-            background-color: #f0f0f0;
+            background-color: #f0f0f0; /* Fondo por defecto si no hay imagen */
         }
 
         #capa-oscura {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.3); /* Oscurece un poco el fondo para leer mejor */
             z-index: 1;
+            display: none; /* Se activa solo cuando hay imagen de fondo */
         }
 
         #contenedor {
@@ -38,11 +39,31 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        /* Estilos para el nuevo botón "Volver" */
+        #boton-volver {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            color: #d63384; /* Mismo rosa de los botones principales */
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 0;
+            display: none; /* Se oculta en la pantalla de inicio */
+            z-index: 3;
+            font-weight: bold;
+        }
+        #boton-volver:hover {
+            color: #b92a6e;
+        }
+
         h2 {
             font-size: 1.1rem;
             color: #333;
             line-height: 1.6;
-            white-space: pre-line;
+            white-space: pre-line; /* Mantiene los saltos de línea del texto */
+            margin-top: 30px; /* Espacio para el botón de volver */
         }
 
         .botones-container {
@@ -52,19 +73,19 @@
             margin-top: 20px;
         }
 
-        button {
+        button.opcion {
             padding: 15px;
             font-size: 16px;
             border: none;
             border-radius: 10px;
-            background-color: #d63384;
+            background-color: #d63384; /* Rosa romántico */
             color: white;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
         }
 
-        button:active { transform: scale(0.95); }
-        button:hover { background-color: #b92a6e; }
+        button.opcion:active { transform: scale(0.95); }
+        button.opcion:hover { background-color: #b92a6e; }
     </style>
 </head>
 <body>
@@ -72,19 +93,23 @@
     <div id="capa-oscura"></div>
 
     <div id="contenedor">
+        <button id="boton-volver" title="Volver a la pantalla anterior">← Volver</button>
+        
         <h2 id="texto-pregunta">Cargando...</h2>
         <div id="botones" class="botones-container"></div>
     </div>
 
     <script>
+        // CONFIGURACIÓN DE LA HISTORIA Y LOGICA DE NAVEGACIÓN
         const escenas = {
             inicio: {
                 texto: "Dejame tratar algo nuevo. ¿Estás dispuesta a jugar este juego?",
-                imagen: "AAAfoto1.jpeg",
+                imagen: "AAAfoto1.jpeg", // Mayúsculas corregidas según imagen_5.png
                 opciones: [
                     { texto: "Si", siguiente: "pantalla2" },
                     { texto: "No", siguiente: "p1_1" }
-                ]
+                ],
+                anterior: null // Pantalla de inicio, no hay 'atrás'
             },
             p1_1: {
                 texto: "Dale no seas mala onda, dame una oportunidad...",
@@ -92,7 +117,8 @@
                 opciones: [
                     { texto: "Bueno okey", siguiente: "pantalla2" },
                     { texto: "No molestes", siguiente: "p1_2" }
-                ]
+                ],
+                anterior: "inicio"
             },
             p1_2: {
                 texto: "En serio... solo un ratito. ¿Probamos?",
@@ -100,7 +126,8 @@
                 opciones: [
                     { texto: "Dale, está bien", siguiente: "pantalla2" },
                     { texto: "Dije que no", siguiente: "p1_3" }
-                ]
+                ],
+                anterior: "p1_1"
             },
             p1_3: {
                 texto: "Soy persistente porque vale la pena. ¿Me dejás mostrarte?",
@@ -108,22 +135,25 @@
                 opciones: [
                     { texto: "A ver...", siguiente: "pantalla2" },
                     { texto: "Pesado eh...", siguiente: "p1_4" }
-                ]
+                ],
+                anterior: "p1_2"
             },
             p1_4: {
                 texto: "Ya no hay botón de No. ¡Ahora sí o sí tenés que avanzar! 😂",
                 imagen: "AAAfoto1.jpeg",
                 opciones: [
                     { texto: "Avanzar por fin", siguiente: "pantalla2" }
-                ]
+                ],
+                anterior: "p1_3"
             },
             pantalla2: {
                 texto: "Dicen que el amor es servicial, dicen que el amor es paciente, incondicional y que todo lo espera.",
-                imagen: "aaafoto2.jpeg", 
+                imagen: "aaafoto2.jpeg", // Nombre según imagen_5.png
                 opciones: [
                     { texto: "No me chamuyes dale que queres", siguiente: "pantalla3" },
                     { texto: "Okey te voy a seguir la corriente", siguiente: "pantalla3" }
-                ]
+                ],
+                anterior: "inicio" // Vuelve al inicio del juego si dice 'no' al principio
             },
             pantalla3: {
                 texto: "Tenemos que empezar por lo principal, por himnos cantos y flores.\n\nHe aquí 3 grandes cualidades que admiro de la Mili Monti:\n\n1. Es la persona más fuerte que conozco.\n2. La perseverancia e inteligencia.\n3. Su belleza y su gracia (no el verbo estar sino el verbo ser, ella ES).",
@@ -131,48 +161,73 @@
                 opciones: [
                     { texto: "Gracias te quiero", siguiente: "pantalla4" },
                     { texto: "Ya sabía pero que lindo q te lo digan", siguiente: "pantalla4" }
-                ]
+                ],
+                anterior: "pantalla2"
             },
             pantalla4: {
                 texto: "¿Pero como llegue a entender y descubrir esto? Dejame contarte brevemente.",
-                imagen: "", 
+                imagen: "", // Fondo blanco pediddo en pantalla4
                 opciones: [
                     { texto: "¡Vamos!", siguiente: "pantalla5" }
-                ]
+                ],
+                anterior: "pantalla3"
             },
             pantalla5: {
                 texto: "He aquí una de nuestras primeras grandes aventuras, nos conocimos en varios niveles. De 0 pasamos a compartir chistes, aventuras por el campo y también espacios espirituales pero este fue un regalo muy especial. No hablo del rompecabezas sino de la notita con la que venia. Ese día mi corazón se derritió de amor (no iba a ser la ultima vez).",
-                imagen: "aaafoto3.jpeg",
+                imagen: "aaafoto3.jpeg", // Nombre según imagen_5.png
                 opciones: [
                     { texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "inicio" }
-                ]
+                ],
+                anterior: "pantalla4"
             }
         };
 
+        const btnVolver = document.getElementById('boton-volver');
+        let escenaActual = 'inicio';
+
         function mostrarEscena(nombre) {
             const escena = escenas[nombre];
+            escenaActual = nombre; // Guardamos cuál es la escena visible
             
+            // 1. Manejo de imagen de fondo y capa oscura
             if (escena.imagen && escena.imagen !== "") {
-                document.body.style.backgroundImage = `url('${escena.imagen}')`;
+                document.body.style.backgroundImage = `url('${cite: escena.imagen}')`;
+                document.body.style.backgroundColor = "transparent";
                 document.getElementById('capa-oscura').style.display = "block";
             } else {
+                // Si no hay imagen, fondo blanco y sin capa oscura
                 document.body.style.backgroundImage = "none";
                 document.body.style.backgroundColor = "#ffffff";
                 document.getElementById('capa-oscura').style.display = "none";
             }
             
+            // 2. Control del botón "Volver"
+            if (escena.anterior) {
+                btnVolver.style.display = "block";
+                // Configuramos qué hace el botón al hacer click
+                btnVolver.onclick = () => mostrarEscena(cite: escena.anterior);
+            } else {
+                btnVolver.style.display = "none";
+            }
+
+            // 3. Actualizar texto de la pregunta
             document.getElementById('texto-pregunta').innerText = escena.texto;
+            
+            // 4. Limpiar y recrear botones de opción
             const divBotones = document.getElementById('botones');
-            divBotones.innerHTML = '';
+            divBotones.innerHTML = ''; // Borramos los anteriores
             
             escena.opciones.forEach(op => {
                 const btn = document.createElement('button');
                 btn.innerText = op.texto;
-                btn.onclick = () => mostrarEscena(op.siguiente);
-                divBotones.appendChild(btn);
+                btn.className = 'opcion'; // Le damos la clase CSS para el estilo
+                // Al hacer click, cargamos la siguiente escena definida
+                btn.onclick = () => mostrarEscena(cite: op.siguiente);
+                divBotones.appendChild(cite: btn);
             });
         }
 
+        // Arrancamos el juego cargando la primera escena
         mostrarEscena('inicio');
     </script>
 </body>
