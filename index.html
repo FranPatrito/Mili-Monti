@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Aventura Interactiva</title>
+    <title>Para Mili</title>
     <style>
         body {
             margin: 0;
@@ -12,29 +12,37 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-size: cover;
             background-position: center;
-            transition: background-image 0.5s ease-in-out; /* Transición suave de fondo */
+            transition: background-image 0.5s ease-in-out;
+            background-color: #f0f0f0;
         }
 
         #capa-oscura {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.3); /* Oscurece un poco el fondo para que el texto resalte */
+            background: rgba(0,0,0,0.4);
             z-index: 1;
         }
 
         #contenedor {
             position: relative;
             z-index: 2;
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             padding: 25px;
             border-radius: 20px;
             width: 85%;
-            max-width: 400px;
+            max-width: 450px;
             text-align: center;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.6;
+            white-space: pre-line;
         }
 
         .botones-container {
@@ -49,13 +57,14 @@
             font-size: 16px;
             border: none;
             border-radius: 10px;
-            background-color: #2c3e50;
+            background-color: #d63384;
             color: white;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform 0.2s, background-color 0.2s;
         }
 
         button:active { transform: scale(0.95); }
+        button:hover { background-color: #b92a6e; }
     </style>
 </head>
 <body>
@@ -63,51 +72,96 @@
     <div id="capa-oscura"></div>
 
     <div id="contenedor">
-        <h2 id="texto-pregunta">Cargando aventura...</h2>
+        <h2 id="texto-pregunta">Cargando...</h2>
         <div id="botones" class="botones-container"></div>
     </div>
 
     <script>
-        // CONFIGURA AQUÍ TU HISTORIA
         const escenas = {
             inicio: {
-                texto: "¡Hola! Bienvenido a esta experiencia. ¿Estás listo?",
-                imagen: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b", // Cambia por tu link de Imgur
+                texto: "Dejame tratar algo nuevo. ¿Estás dispuesta a jugar este juego?",
+                imagen: "AAAfoto1.jpeg",
                 opciones: [
-                    { texto: "¡Sí, vamos!", siguiente: "paso1" },
-                    { texto: "No todavía", siguiente: "esperar" }
+                    { texto: "Si", siguiente: "pantalla2" },
+                    { texto: "No", siguiente: "p1_1" }
                 ]
             },
-            paso1: {
-                texto: "Has avanzado al primer nivel. ¿Qué camino eliges?",
-                imagen: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e",
+            p1_1: {
+                texto: "Dale no seas mala onda, dame una oportunidad...",
+                imagen: "AAAfoto1.jpeg",
                 opciones: [
-                    { texto: "Izquierda", siguiente: "final" },
-                    { texto: "Derecha", siguiente: "inicio" }
+                    { texto: "Bueno okey", siguiente: "pantalla2" },
+                    { texto: "No molestes", siguiente: "p1_2" }
                 ]
             },
-            esperar: {
-                texto: "Tómate tu tiempo. Avísame cuando estés preparado.",
-                imagen: "https://images.unsplash.com/photo-1499209974431-9ddd3e2f01f8",
-                opciones: [{ texto: "Volver", siguiente: "inicio" }]
+            p1_2: {
+                texto: "En serio... solo un ratito. ¿Probamos?",
+                imagen: "AAAfoto1.jpeg",
+                opciones: [
+                    { texto: "Dale, está bien", siguiente: "pantalla2" },
+                    { texto: "Dije que no", siguiente: "p1_3" }
+                ]
             },
-            final: {
-                texto: "¡Llegaste al final del recorrido!",
-                imagen: "https://images.unsplash.com/photo-1490730141103-6cac27aaab94",
-                opciones: [{ texto: "Empezar de nuevo", siguiente: "inicio" }]
+            p1_3: {
+                texto: "Soy persistente porque vale la pena. ¿Me dejás mostrarte?",
+                imagen: "AAAfoto1.jpeg",
+                opciones: [
+                    { texto: "A ver...", siguiente: "pantalla2" },
+                    { texto: "Pesado eh...", siguiente: "p1_4" }
+                ]
+            },
+            p1_4: {
+                texto: "Ya no hay botón de No. ¡Ahora sí o sí tenés que avanzar! 😂",
+                imagen: "AAAfoto1.jpeg",
+                opciones: [
+                    { texto: "Avanzar por fin", siguiente: "pantalla2" }
+                ]
+            },
+            pantalla2: {
+                texto: "Dicen que el amor es servicial, dicen que el amor es paciente, incondicional y que todo lo espera.",
+                imagen: "aaafoto2.jpeg", 
+                opciones: [
+                    { texto: "No me chamuyes dale que queres", siguiente: "pantalla3" },
+                    { texto: "Okey te voy a seguir la corriente", siguiente: "pantalla3" }
+                ]
+            },
+            pantalla3: {
+                texto: "Tenemos que empezar por lo principal, por himnos cantos y flores.\n\nHe aquí 3 grandes cualidades que admiro de la Mili Monti:\n\n1. Es la persona más fuerte que conozco.\n2. La perseverancia e inteligencia.\n3. Su belleza y su gracia (no el verbo estar sino el verbo ser, ella ES).",
+                imagen: "aaafoto2.jpeg",
+                opciones: [
+                    { texto: "Gracias te quiero", siguiente: "pantalla4" },
+                    { texto: "Ya sabía pero que lindo q te lo digan", siguiente: "pantalla4" }
+                ]
+            },
+            pantalla4: {
+                texto: "¿Pero como llegue a entender y descubrir esto? Dejame contarte brevemente.",
+                imagen: "", 
+                opciones: [
+                    { texto: "¡Vamos!", siguiente: "pantalla5" }
+                ]
+            },
+            pantalla5: {
+                texto: "He aquí una de nuestras primeras grandes aventuras, nos conocimos en varios niveles. De 0 pasamos a compartir chistes, aventuras por el campo y también espacios espirituales pero este fue un regalo muy especial. No hablo del rompecabezas sino de la notita con la que venia. Ese día mi corazón se derritió de amor (no iba a ser la ultima vez).",
+                imagen: "aaafoto3.jpeg",
+                opciones: [
+                    { texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "inicio" }
+                ]
             }
         };
 
         function mostrarEscena(nombre) {
             const escena = escenas[nombre];
             
-            // Cambiar fondo
-            document.body.style.backgroundImage = `url('${escena.imagen}')`;
+            if (escena.imagen && escena.imagen !== "") {
+                document.body.style.backgroundImage = `url('${escena.imagen}')`;
+                document.getElementById('capa-oscura').style.display = "block";
+            } else {
+                document.body.style.backgroundImage = "none";
+                document.body.style.backgroundColor = "#ffffff";
+                document.getElementById('capa-oscura').style.display = "none";
+            }
             
-            // Cambiar texto
             document.getElementById('texto-pregunta').innerText = escena.texto;
-            
-            // Limpiar y crear botones
             const divBotones = document.getElementById('botones');
             divBotones.innerHTML = '';
             
@@ -119,7 +173,6 @@
             });
         }
 
-        // Arrancar
         mostrarEscena('inicio');
     </script>
 </body>
