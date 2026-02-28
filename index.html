@@ -12,56 +12,39 @@
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             overflow-x: hidden;
         }
-
         #contenedor { 
             position: relative; background: rgba(255, 255, 255, 0.98); 
             padding: 20px; border-radius: 25px; width: 90%; 
             max-width: 400px; text-align: center; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             display: flex; flex-direction: column; align-items: center;
-            margin: 20px 0; transition: max-width 0.5s ease;
+            margin: 20px 0;
         }
-
         #marco-foto {
             width: 100%; height: 0; padding-bottom: 125%; 
             background-size: contain; background-position: center;
             background-repeat: no-repeat; border-radius: 15px;
             margin-bottom: 20px; display: none;
         }
-
-        /* Contenedor especial para el video x8 o x4 si decides volver a usarlo visualmente */
-        .grid-fotos {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; width: 100%; margin-bottom: 20px;
-        }
-
         video { border-radius: 15px; width: 100%; max-height: 50vh; background: #000; margin-bottom: 15px; }
-
         #boton-volver { 
             position: absolute; top: 15px; left: 15px; 
             background: none; border: none; color: #d63384; 
             font-size: 1.1rem; cursor: pointer; display: none; 
             font-weight: bold; z-index: 10;
         }
-
         h2 { font-size: 1.05rem; color: #333; line-height: 1.6; white-space: pre-line; margin-bottom: 20px; }
-        
         .botones-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
-        
         button.opcion { 
             padding: 15px; font-size: 14px; border: none; 
             border-radius: 12px; background-color: #d63384; 
             color: white; cursor: pointer; transition: transform 0.2s; 
         }
         button.opcion:active { transform: scale(0.95); }
-
-        @media (max-width: 600px) {
-            #contenedor { width: 85%; padding: 15px; }
-            #marco-foto { padding-bottom: 130%; }
-        }
+        .spotify-link { color: #1DB954; font-weight: bold; text-decoration: none; margin-bottom: 15px; display: block; }
     </style>
 </head>
 <body>
-
     <div id="contenedor">
         <button id="boton-volver">← Volver</button>
         <div id="marco-foto"></div>
@@ -72,92 +55,36 @@
 
     <script>
         const escenas = {
-            inicio: {
-                texto: "Dejame tratar algo nuevo. ¿Estás dispuesta a jugar este juego?",
-                imagen: "AAAfoto1.jpeg", 
-                opciones: [{ texto: "Si", siguiente: "pantalla2" }, { texto: "No", siguiente: "p1_1" }],
-                anterior: null
-            },
-            p1_1: {
-                texto: "Dale no seas mala onda, dame una oportunidad...",
-                imagen: "AAAfoto1.jpeg",
-                opciones: [{ texto: "Bueno okey", siguiente: "pantalla2" }, { texto: "No molestes", siguiente: "p1_2" }],
-                anterior: "inicio"
-            },
-            p1_2: {
-                texto: "En serio... solo un ratito. ¿Probamos?",
-                imagen: "AAAfoto1.jpeg",
-                opciones: [{ texto: "Dale, está bien", siguiente: "pantalla2" }, { texto: "Dije que no", siguiente: "p1_3" }],
-                anterior: "p1_1"
-            },
-            p1_3: {
-                texto: "Soy persistente porque vale la pena. ¿Me dejás mostrarte?",
-                imagen: "AAAfoto1.jpeg",
-                opciones: [{ texto: "A ver...", siguiente: "pantalla2" }, { texto: "Pesado eh...", siguiente: "p1_4" }],
-                anterior: "p1_2"
-            },
-            p1_4: {
-                texto: "Ya no hay botón de No. ¡Ahora sí o sí tenés que avanzar! 😂",
-                imagen: "AAAfoto1.jpeg",
-                opciones: [{ texto: "Avanzar por fin", siguiente: "pantalla2" }],
-                anterior: "p1_3"
-            },
-            pantalla2: {
-                texto: "Dicen que el amor es servicial, dicen que el amor es paciente, incondicional y que todo lo espera.",
-                imagen: "aaafoto2.jpeg", 
-                opciones: [{ texto: "No me chamuyes dale que queres", siguiente: "pantalla3" }, { texto: "Okey te voy a seguir la corriente", siguiente: "pantalla3" }],
-                anterior: "inicio"
-            },
-            pantalla3: {
-                texto: "Tenemos que empezar por lo principal, por himnos cantos y flores.\n\nHe aquí 3 grandes cualidades que admiro de la Mili Monti:\n\n1. Es la persona más fuerte que conozco.\n2. La perseverancia e inteligencia.\n3. Su belleza y su gracia (no el verbo estar sino el verbo ser, ella ES).",
-                imagen: "aaafoto2.jpeg",
-                opciones: [{ texto: "Gracias te quiero", siguiente: "pantalla4" }, { texto: "Ya sabía pero que lindo q te lo digan", siguiente: "pantalla4" }],
-                anterior: "pantalla2"
-            },
-            pantalla4: {
-                texto: "¿Pero como llegue a entender y descubrir esto? Dejame contarte brevemente.",
-                imagen: "", 
-                opciones: [{ texto: "¡Vamos!", siguiente: "pantalla5" }],
-                anterior: "pantalla3"
-            },
-            pantalla5: {
-                texto: "He aquí una de nuestras primeras grandes aventuras, nos conocimos en varios niveles. De 0 pasamos a compartir chistes, aventuras por el campo y también espacios espirituales pero este fue un regalo muy especial. No hablo del rompecabezas sino de la notita con la que venia. Ese día mi corazón se derritió de amor (no iba a ser la ultima vez).",
-                imagen: "aaafoto3.jpeg",
-                opciones: [{ texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "pantalla6" }],
-                anterior: "pantalla4"
-            },
-            pantalla6: {
-                texto: "Mi regalo no es el rompecabezas sino el tiempo que nos lleve armarlo",
-                imagen: "aaafoto10.jpeg",
-                opciones: [{ texto: "La verdad que soy re tierna si", siguiente: "pantalla7" }],
-                anterior: "pantalla5"
-            },
-            pantalla7: {
-                texto: "Pasamos cumpleaños juntos, el retiro, distancia de viajes, aprendimos a tomar aperols, bastoncitos de muzarella, pasamos por lugares como el mercado norte y tambien Potrerillo de Larreta. 10 meses o 10 dias o 10 años, ya no se",
-                imagen: "aaafoto8.png",
-                opciones: [{ texto: "la vida pasa", siguiente: "pantalla8" }],
-                anterior: "pantalla6"
-            },
-            pantalla8: {
-                texto: "Este video es nuevo pero con esa remera y nuestra actitud se representan estos meses que hemos vivido juntos",
-                video: "aaavideo1.mp4",
-                opciones: [
-                    { texto: "¿Aprendiste a programar para todo esto?", siguiente: "pantalla9" },
-                    { texto: "No puedo creer que me regalaste esa remera", siguiente: "pantalla9" },
-                    { texto: "Sos un idiota pero se que me queres mucho", siguiente: "pantalla9" }
-                ],
-                anterior: "pantalla7"
-            },
-            pantalla9: {
-                texto: "Ademas de esta bella presentacion deberias haber recibido unas flores hoy. A esto me comprometi cuando hacia esta pagina, si no te regalo flores el fran del futuro entonces pegale un poco, pero si te regalo entonces miralo con ojitos chinos, mordete los labios un poco y decile que es un tonto.",
-                imagen: "aaafoto5.jpeg",
-                opciones: [
-                    { texto: "Me regaló, están re lindas as always", siguiente: "inicio" },
-                    { texto: "Salame se olvidó (imposible)", siguiente: "inicio" },
-                    { texto: "Fran del pasado sos un salame tambien", siguiente: "inicio" }
-                ],
-                anterior: "pantalla8"
-            }
+            inicio: { texto: "Dejame tratar algo nuevo. ¿Estás dispuesta a jugar este juego?", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Si", siguiente: "pantalla2" }, { texto: "No", siguiente: "p1_1" }], anterior: null },
+            p1_1: { texto: "Dale no seas mala onda, dame una oportunidad...", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Bueno okey", siguiente: "pantalla2" }, { texto: "No molestes", siguiente: "p1_2" }], anterior: "inicio" },
+            p1_2: { texto: "En serio... solo un ratito. ¿Probamos?", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Dale, está bien", siguiente: "pantalla2" }, { texto: "Dije que no", siguiente: "p1_3" }], anterior: "p1_1" },
+            p1_3: { texto: "Soy persistente porque vale la pena. ¿Me dejás mostrarte?", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "A ver...", siguiente: "pantalla2" }, { texto: "Pesado eh...", siguiente: "p1_4" }], anterior: "p1_2" },
+            p1_4: { texto: "Ya no hay botón de No. ¡Ahora sí o sí tenés que avanzar! 😂", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Avanzar por fin", siguiente: "pantalla2" }], anterior: "p1_3" },
+            pantalla2: { texto: "Dicen que el amor es servicial, dicen que el amor es paciente, incondicional y que todo lo espera.", imagen: "aaafoto4.jpeg", opciones: [{ texto: "No me chamuyes dale que queres", siguiente: "pantalla3" }, { texto: "Okey te voy a seguir la corriente", siguiente: "pantalla3" }], anterior: "inicio" },
+            pantalla3: { texto: "Tenemos que empezar por lo principal, por himnos cantos y flores.\n\nHe aquí 3 grandes cualidades que admiro de la Mili Monti:\n\n1. Es la persona más fuerte que conozco.\n2. La perseverancia e inteligencia.\n3. Su belleza y su gracia (no el verbo estar sino el verbo ser, ella ES).", imagen: "aaafoto2.jpeg", opciones: [{ texto: "Gracias te quiero", siguiente: "pantalla4" }, { texto: "Ya sabía pero que lindo q te lo digan", siguiente: "pantalla4" }], anterior: "pantalla2" },
+            pantalla4: { texto: "¿Pero como llegue a entender y descubrir esto? Dejame contarte brevemente.", imagen: "", opciones: [{ texto: "¡Vamos!", siguiente: "pantalla5" }], anterior: "pantalla3" },
+            pantalla5: { texto: "He aquí una de nuestras primeras grandes aventuras... Ese día mi corazón se derritió de amor (no iba a ser la ultima vez).", imagen: "aaafoto3.jpeg", opciones: [{ texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "pantalla6" }], anterior: "pantalla4" },
+            pantalla6: { texto: "Mi regalo no es el rompecabezas sino el tiempo que nos lleve armarlo", imagen: "aaafoto10.jpeg", opciones: [{ texto: "La verdad que soy re tierna si", siguiente: "pantalla7" }], anterior: "pantalla5" },
+            pantalla7: { texto: "Pasamos cumpleaños juntos, el retiro, distancia de viajes, aprendimos a tomar aperols... 10 meses o 10 dias o 10 años, ya no se", imagen: "aaafoto8.png", opciones: [{ texto: "la vida pasa", siguiente: "pantalla8" }], anterior: "pantalla6" },
+            pantalla8: { texto: "Este video es nuevo pero con esa remera y nuestra actitud se representan estos meses que hemos vivido juntos", video: "aaavideo1.mp4", opciones: [{ texto: "¿Aprendiste a programar?", siguiente: "pantalla9" }, { texto: "No puedo creer la remera", siguiente: "pantalla9" }, { texto: "Sos un idiota pero te quiero", siguiente: "pantalla9" }], anterior: "pantalla7" },
+            pantalla9: { texto: "Ademas de esta bella presentacion deberias haber recibido unas flores hoy...", imagen: "aaafoto5.jpeg", opciones: [{ texto: "Me regaló!", siguiente: "pantalla10" }, { texto: "Se olvidó (imposible)", siguiente: "pantalla10" }], anterior: "pantalla8" },
+            pantalla10: { texto: "bueno hora de una decision, esta vez te agarre porque si no elegis no avanzas...", imagen: "aaafoto11.jpeg", opciones: [{ texto: "Perdonar al fran", siguiente: "pantalla10_1" }, { texto: "No tomar nunca mas aperols", siguiente: "pantalla10_22" }], anterior: "pantalla9" },
+            pantalla10_22: { texto: "bueno lastima no va a pasar elegi de vuelta", imagen: "aaafoto11.jpeg", opciones: [{ texto: "elegir de vuelta", siguiente: "pantalla10" }], anterior: "pantalla10" },
+            pantalla10_1: { texto: "Muy bien... vamos a ver si son altas o bajas... que preferis:", imagen: "aaafoto11.jpeg", opciones: [{ texto: "perdonar al fran", siguiente: "pantalla10_2" }, { texto: "No comer nunca mas entraña", siguiente: "pantalla10_21" }], anterior: "pantalla10" },
+            pantalla10_21: { texto: "bueno lastima no va a pasar elegi de vuelta", imagen: "aaafoto11.jpeg", opciones: [{ texto: "elegir de vuelta", siguiente: "pantalla10_1" }], anterior: "pantalla10_1" },
+            pantalla10_2: { texto: "okey, venimos mejor de lo que pensaba...", imagen: "aaafoto11.jpeg", opciones: [{ texto: "sigamos", siguiente: "pantalla10_3" }], anterior: "pantalla10_1" },
+            pantalla10_3: { texto: "Llegando al final... espero que alguna de las pantallas te haya sacado una sonrisa.", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla11" }], anterior: "pantalla10_2" },
+            pantalla11: { texto: "Desearnos unos felices 10 meses... felices porque ya nos encontramos.", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla12" }], anterior: "pantalla10_3" },
+            pantalla12: { texto: "Agradezco tu presencia en mi vida... de alguna manera me has acercado a Jesús.", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla13" }], anterior: "pantalla11" },
+            pantalla13: { texto: "Bueno tambien me hiciste mas paciente... a tomar aperols y buscar a una lady todo el tiempo.", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla14" }], anterior: "pantalla12" },
+            pantalla14: { texto: "Pero enserio: te sigo admirando... Rezo todos los dias por vos, para que seas santa.", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla15" }], anterior: "pantalla13" },
+            pantalla15: { texto: "Te prometo un amor que todo lo soporte... a pesar de las dificultades.", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla16" }], anterior: "pantalla14" },
+            pantalla16: { texto: "te prometo tambien un amor paciente y bondadoso... que nuestro amor dure hasta que seamos viejitos.", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla17" }], anterior: "pantalla15" },
+            pantalla17: { texto: "Ahora si, despues de reclamar mi amor, una cosita mas... ", imagen: "aaafoto6.jpeg", opciones: [{ texto: "Siguiente", siguiente: "pantalla18" }], anterior: "pantalla16" },
+            pantalla18: { texto: "que preferis", imagen: "aaafoto6.jpeg", opciones: [{ texto: "que te reciten un poema", siguiente: "pantalla19" }, { texto: "que te dediquen una cancion", siguiente: "pantalla20" }], anterior: "pantalla17" },
+            pantalla19: { texto: "mira al salame de tu novio y espera que saque algo del bolsillo", imagen: "aaafoto6.jpeg", opciones: [{ texto: "ok y lo otro?", siguiente: "pantalla20" }, { texto: "fiiin finalisimo", siguiente: "pantalla21" }], anterior: "pantalla18" },
+            pantalla20: { texto: "Como siempre con algo de esfuerzo y memoria elegi esta cancion hoy", imagen: "aaafoto16.jpeg", spotify: "https://open.spotify.com/track/1sJFu2pvYJhtEOo9oVe1TZ?si=BUU_tagNQ2q3UlfpsmsM2A", opciones: [{ texto: "y lo otroooo?", siguiente: "pantalla19" }, { texto: "fiiiin, final", siguiente: "pantalla21" }], anterior: "pantalla18" },
+            pantalla21: { texto: "fin, perdon por tan poco. Te amo, espero que te sientas tan feliz de estar conmigo como yo lo estoy con vos", video: "aaavideo3.mp4", loop: true, opciones: [{ texto: "Volver a empezar", siguiente: "inicio" }], anterior: "pantalla19" }
         };
 
         function mostrarEscena(nombre) {
@@ -165,16 +92,18 @@
             const marco = document.getElementById('marco-foto');
             const vCont = document.getElementById('video-cont');
             const btnVolver = document.getElementById('boton-volver');
-            const contenedor = document.getElementById('contenedor');
+            const txtPregunta = document.getElementById('texto-pregunta');
+            const divBotones = document.getElementById('botones');
 
-            // Limpieza inicial
             marco.style.display = "none";
             vCont.style.display = "none";
             vCont.innerHTML = "";
+            divBotones.innerHTML = "";
 
             if (escena.video) {
                 vCont.style.display = "block";
-                vCont.innerHTML = `<video src="${escena.video}" autoplay controls></video>`;
+                const loopAttr = escena.loop ? "loop" : "";
+                vCont.innerHTML = `<video src="${escena.video}" autoplay ${loopAttr} controls></video>`;
             } else if (escena.imagen) {
                 marco.style.display = "block";
                 marco.style.backgroundImage = `url('${escena.imagen}')`;
@@ -183,9 +112,17 @@
             btnVolver.style.display = escena.anterior ? "block" : "none";
             btnVolver.onclick = () => mostrarEscena(escena.anterior);
 
-            document.getElementById('texto-pregunta').innerText = escena.texto;
-            const divBotones = document.getElementById('botones');
-            divBotones.innerHTML = '';
+            txtPregunta.innerText = escena.texto;
+            
+            if (escena.spotify) {
+                const link = document.createElement('a');
+                link.href = escena.spotify;
+                link.className = 'spotify-link';
+                link.target = '_blank';
+                link.innerText = escena.spotify;
+                divBotones.appendChild(link);
+            }
+
             escena.opciones.forEach(op => {
                 const btn = document.createElement('button');
                 btn.innerText = op.texto;
@@ -194,7 +131,6 @@
                 divBotones.appendChild(btn);
             });
         }
-
         mostrarEscena('inicio');
     </script>
 </body>
