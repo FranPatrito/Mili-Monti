@@ -6,55 +6,68 @@
     <title>Para Mili</title>
     <style>
         body { 
-            margin: 0; padding: 0; height: 100vh; display: flex; 
+            margin: 0; padding: 0; min-height: 100vh; display: flex; 
             justify-content: center; align-items: center; 
-            font-family: 'Segoe UI', sans-serif; background-size: cover; 
-            background-position: center center; background-repeat: no-repeat;
-            background-attachment: fixed; transition: background-image 0.5s; 
-            background-color: #f0f0f0; overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            overflow-x: hidden;
         }
-        #capa-oscura { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.4); z-index: 1; display: none; 
-        }
+
         #contenedor { 
-            position: relative; z-index: 2; background: rgba(255, 255, 255, 0.95); 
-            padding: 25px; border-radius: 20px; width: 85%; max-width: 450px; 
-            text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: max-width 0.5s ease;
+            position: relative; background: rgba(255, 255, 255, 0.98); 
+            padding: 20px; border-radius: 25px; width: 90%; 
+            max-width: 400px; text-align: center; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            display: flex; flex-direction: column; align-items: center;
+            margin: 20px 0; transition: max-width 0.5s ease;
         }
+
+        #marco-foto {
+            width: 100%; height: 0; padding-bottom: 125%; 
+            background-size: contain; background-position: center;
+            background-repeat: no-repeat; border-radius: 15px;
+            margin-bottom: 20px; display: none;
+        }
+
+        /* Contenedor especial para el video x8 o x4 si decides volver a usarlo visualmente */
+        .grid-fotos {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 5px; width: 100%; margin-bottom: 20px;
+        }
+
+        video { border-radius: 15px; width: 100%; max-height: 50vh; background: #000; margin-bottom: 15px; }
+
         #boton-volver { 
-            position: absolute; top: 15px; left: 15px; background: none; 
-            border: none; color: #d63384; font-size: 1.2rem; cursor: pointer; 
-            display: none; font-weight: bold; 
+            position: absolute; top: 15px; left: 15px; 
+            background: none; border: none; color: #d63384; 
+            font-size: 1.1rem; cursor: pointer; display: none; 
+            font-weight: bold; z-index: 10;
         }
-        h2 { font-size: 1.1rem; color: #333; line-height: 1.6; white-space: pre-line; margin-top: 30px; }
-        .botones-container { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+
+        h2 { font-size: 1.05rem; color: #333; line-height: 1.6; white-space: pre-line; margin-bottom: 20px; }
+        
+        .botones-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        
         button.opcion { 
-            padding: 15px; font-size: 14px; border: none; border-radius: 10px; 
-            background-color: #d63384; color: white; cursor: pointer; transition: transform 0.2s; 
+            padding: 15px; font-size: 14px; border: none; 
+            border-radius: 12px; background-color: #d63384; 
+            color: white; cursor: pointer; transition: transform 0.2s; 
         }
         button.opcion:active { transform: scale(0.95); }
 
-        /* Diseño especial para Video x Texto */
-        .flex-video { display: flex; flex-direction: row; align-items: center; gap: 20px; text-align: left; }
-        video { border-radius: 15px; max-height: 60vh; background: #000; }
-        
         @media (max-width: 600px) {
-            .flex-video { flex-direction: column; text-align: center; }
-            video { width: 100%; max-height: 40vh; }
-            #contenedor { width: 90%; padding: 15px; }
+            #contenedor { width: 85%; padding: 15px; }
+            #marco-foto { padding-bottom: 130%; }
         }
     </style>
 </head>
 <body>
-    <div id="capa-oscura"></div>
+
     <div id="contenedor">
         <button id="boton-volver">← Volver</button>
-        <div id="contenido-dinamico">
-            <h2 id="texto-pregunta">Cargando...</h2>
-            <div id="botones" class="botones-container"></div>
-        </div>
+        <div id="marco-foto"></div>
+        <div id="video-cont" style="width:100%; display:none;"></div>
+        <h2 id="texto-pregunta">Cargando...</h2>
+        <div id="botones" class="botones-container"></div>
     </div>
 
     <script>
@@ -116,7 +129,6 @@
             pantalla6: {
                 texto: "Mi regalo no es el rompecabezas sino el tiempo que nos lleve armarlo",
                 imagen: "aaafoto10.jpeg",
-                efectoX4: true,
                 opciones: [{ texto: "La verdad que soy re tierna si", siguiente: "pantalla7" }],
                 anterior: "pantalla5"
             },
@@ -135,69 +147,54 @@
                     { texto: "Sos un idiota pero se que me queres mucho", siguiente: "pantalla9" }
                 ],
                 anterior: "pantalla7"
+            },
+            pantalla9: {
+                texto: "Ademas de esta bella presentacion deberias haber recibido unas flores hoy. A esto me comprometi cuando hacia esta pagina, si no te regalo flores el fran del futuro entonces pegale un poco, pero si te regalo entonces miralo con ojitos chinos, mordete los labios un poco y decile que es un tonto.",
+                imagen: "aaafoto5.jpeg",
+                opciones: [
+                    { texto: "Me regaló, están re lindas as always", siguiente: "inicio" },
+                    { texto: "Salame se olvidó (imposible)", siguiente: "inicio" },
+                    { texto: "Fran del pasado sos un salame tambien", siguiente: "inicio" }
+                ],
+                anterior: "pantalla8"
             }
         };
 
         function mostrarEscena(nombre) {
             const escena = escenas[nombre];
-            const contenedor = document.getElementById('contenedor');
-            const din = document.getElementById('contenido-dinamico');
+            const marco = document.getElementById('marco-foto');
+            const vCont = document.getElementById('video-cont');
             const btnVolver = document.getElementById('boton-volver');
+            const contenedor = document.getElementById('contenedor');
 
-            // Reset de estilos de fondo
-            document.body.style.backgroundSize = "cover";
-            document.body.style.backgroundRepeat = "no-repeat";
+            // Limpieza inicial
+            marco.style.display = "none";
+            vCont.style.display = "none";
+            vCont.innerHTML = "";
 
-            if (escena.imagen) {
-                document.body.style.backgroundImage = "url('" + escena.imagen + "')";
-                document.getElementById('capa-oscura').style.display = "block";
-                if (escena.efectoX4) {
-                    document.body.style.backgroundSize = "50% 50%";
-                    document.body.style.backgroundRepeat = "repeat";
-                }
-            } else {
-                document.body.style.backgroundImage = "none";
-                document.body.style.backgroundColor = "#ffffff";
-                document.getElementById('capa-oscura').style.display = "none";
-            }
-
-            // Manejo del botón volver
-            btnVolver.style.display = escena.anterior ? "block" : "none";
-            btnVolver.onclick = () => {
-                contenedor.style.maxWidth = "450px";
-                mostrarEscena(escena.anterior);
-            };
-
-            // Construcción del contenido (Diferenciar Pantalla 8)
             if (escena.video) {
-                contenedor.style.maxWidth = "800px";
-                din.innerHTML = `
-                    <div class="flex-video">
-                        <video src="${escena.video}" autoplay controls></video>
-                        <div>
-                            <h2>${escena.texto}</h2>
-                            <div id="btns-din" class="botones-container"></div>
-                        </div>
-                    </div>`;
-                const contBtns = document.getElementById('btns-din');
-                escena.opciones.forEach(op => {
-                    const b = document.createElement('button');
-                    b.innerText = op.texto; b.className = 'opcion';
-                    b.onclick = () => { contenedor.style.maxWidth = "450px"; mostrarEscena(op.siguiente); };
-                    contBtns.appendChild(b);
-                });
-            } else {
-                contenedor.style.maxWidth = "450px";
-                din.innerHTML = `<h2 id="texto-pregunta">${escena.texto}</h2><div id="btns-din" class="botones-container"></div>`;
-                const contBtns = document.getElementById('btns-din');
-                escena.opciones.forEach(op => {
-                    const b = document.createElement('button');
-                    b.innerText = op.texto; b.className = 'opcion';
-                    b.onclick = () => mostrarEscena(op.siguiente);
-                    contBtns.appendChild(b);
-                });
+                vCont.style.display = "block";
+                vCont.innerHTML = `<video src="${escena.video}" autoplay controls></video>`;
+            } else if (escena.imagen) {
+                marco.style.display = "block";
+                marco.style.backgroundImage = `url('${escena.imagen}')`;
             }
+
+            btnVolver.style.display = escena.anterior ? "block" : "none";
+            btnVolver.onclick = () => mostrarEscena(escena.anterior);
+
+            document.getElementById('texto-pregunta').innerText = escena.texto;
+            const divBotones = document.getElementById('botones');
+            divBotones.innerHTML = '';
+            escena.opciones.forEach(op => {
+                const btn = document.createElement('button');
+                btn.innerText = op.texto;
+                btn.className = 'opcion';
+                btn.onclick = () => mostrarEscena(op.siguiente);
+                divBotones.appendChild(btn);
+            });
         }
+
         mostrarEscena('inicio');
     </script>
 </body>
