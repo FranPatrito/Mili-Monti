@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mi Historia Interactiva</title>
+    <style>
+        body {
+            /* Aquí puedes cambiar la URL por la de tu imagen */
+            background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        #contenedor {
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo semi-transparente */
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .botones-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="contenedor">
+        <h2 id="texto-pregunta">¿Te gustaría comenzar esta aventura?</h2>
+        <div id="botones" class="botones-container">
+            </div>
+    </div>
+
+    <script>
+        // Aquí defines tus "escenas"
+        const escenas = {
+            inicio: {
+                texto: "Te despiertas en un bosque desconocido. ¿Qué haces?",
+                opciones: [
+                    { texto: "Caminar hacia el río", siguiente: "rio" },
+                    { texto: "Subir a un árbol", siguiente: "arbol" }
+                ]
+            },
+            rio: {
+                texto: "Llegas al río y ves una balsa. ¿Cruzas o sigues la orilla?",
+                opciones: [
+                    { texto: "Cruzar", siguiente: "final_bueno" },
+                    { texto: "Seguir la orilla", siguiente: "inicio" }
+                ]
+            },
+            arbol: {
+                texto: "Desde arriba ves una cabaña humeante. ¿Bajas a investigar?",
+                opciones: [
+                    { texto: "Ir a la cabaña", siguiente: "final_misterioso" },
+                    { texto: "Volver al inicio", siguiente: "inicio" }
+                ]
+            },
+            final_bueno: {
+                texto: "¡Felicidades! La balsa te llevó a un pueblo seguro.",
+                opciones: [{ texto: "Reiniciar", siguiente: "inicio" }]
+            },
+            final_misterioso: {
+                texto: "La cabaña estaba llena de pasteles. Te quedaste a vivir allí.",
+                opciones: [{ texto: "Reiniciar", siguiente: "inicio" }]
+            }
+        };
+
+        function mostrarEscena(nombreEscena) {
+            const escena = escenas[nombreEscena];
+            document.getElementById('texto-pregunta').innerText = escena.texto;
+            const contenedorBotones = document.getElementById('botones');
+            
+            // Limpiamos botones anteriores
+            contenedorBotones.innerHTML = '';
+
+            // Creamos los nuevos botones
+            escena.opciones.forEach(opcion => {
+                const boton = document.createElement('button');
+                boton.innerText = opcion.texto;
+                boton.onclick = () => mostrarEscena(opcion.siguiente);
+                contenedorBotones.appendChild(boton);
+            });
+        }
+
+        // Iniciar el juego
+        mostrarEscena('inicio');
+    </script>
+</body>
+</html>
