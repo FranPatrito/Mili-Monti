@@ -55,7 +55,6 @@
 
     <script>
         const escenas = {
-            
             inicio: {
                 texto: "Dejame tratar algo nuevo. ¿Estás dispuesta a jugar este juego?",
                 imagen: "AAAfoto1.jpeg", 
@@ -107,25 +106,26 @@
             pantalla5: {
                 texto: "He aquí una de nuestras primeras grandes aventuras. Pongo esta foto porque este regalo creo nacio de la confianza de haber pasado un mes juntos conociendonos. Nos conocimos en varios niveles. De 0 pasamos a compartir chistes, aventuras por el campo y también espacios espirituales pero este fue un regalo muy especial. No hablo del rompecabezas sino de la notita con la que venia. Ese día mi corazón se derritió de amor (no iba a ser la ultima vez).",
                 imagen: "aaafoto3.jpeg",
-                opciones: [{ texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "pantalla6.1" }],
+                opciones: [{ texto: "Tuviste el rompecabezas 3 meses caradura", siguiente: "pantalla6_1" }],
                 anterior: "pantalla4"
             },
-
-            
-            pantalla6.1: {
+            pantalla6_1: {
                 texto: "De todos los regalos hermosos siempre quise quedarme en el corazón con este... Mi corazón se derritio cuando lei esa notita (y gracias a Dios no fue la ultima vez)",
                 imagen: "aaafoto10.jpeg",
-                opciones: [{ texto: "La verdad que soy re tierna si", siguiente: "pantalla6" }],
-                opciones: [{ texto: "¿mmmm de cual de todos hablas?", siguiente: "pantalla6" }],
+                opciones: [
+                    { texto: "La verdad que soy re tierna si", siguiente: "pantalla6" },
+                    { texto: "¿mmmm de cual de todos hablas?", siguiente: "pantalla6" }
+                ],
                 anterior: "pantalla5"
             },
-            
             pantalla6: {
-                texto: "Mi regalo no es el rompecabezas sino el tiempo que nos lleve armarlo" \n "Hoy todos los dias al trabajar veo el rompecabezas, me rio y sonrio",
+                texto: "Mi regalo no es el rompecabezas sino el tiempo que nos lleve armarlo\n\nHoy todos los dias al trabajar veo el rompecabezas, me rio y sonrio",
                 imagen: "aaafoto10.jpeg",
-                opciones: [{ texto: "Que bonito regalo", siguiente: "pantalla7" }],
-                opciones: [{ texto: "Nos costo armarlo y valio la pena je", siguiente: "pantalla7" }],
-                anterior: "pantalla5"
+                opciones: [
+                    { texto: "Que bonito regalo", siguiente: "pantalla7" },
+                    { texto: "Nos costo armarlo y valio la pena je", siguiente: "pantalla7" }
+                ],
+                anterior: "pantalla6_1"
             },
             pantalla7: {
                 texto: "Desde entonces Pasamos cumpleaños juntos, el retiro, distancia de viajes, aprendimos a tomar aperols, bastoncitos de muzarella, pasamos por lugares como el mercado norte y tambien Potrerillo de Larreta. 10 meses o 10 dias o 10 años, ya no se",
@@ -279,17 +279,16 @@
 
         function mostrarEscena(nombre) {
             const escena = escenas[nombre];
+            if (!escena) return;
             const marco = document.getElementById('marco-foto');
             const vCont = document.getElementById('video-cont');
             const btnVolver = document.getElementById('boton-volver');
             const txtPregunta = document.getElementById('texto-pregunta');
             const divBotones = document.getElementById('botones');
-
             marco.style.display = "none";
             vCont.style.display = "none";
             vCont.innerHTML = "";
             divBotones.innerHTML = "";
-
             if (escena.video) {
                 vCont.style.display = "block";
                 const loopAttr = escena.loop ? "loop" : "";
@@ -298,12 +297,9 @@
                 marco.style.display = "block";
                 marco.style.backgroundImage = `url('${escena.imagen}')`;
             }
-
             btnVolver.style.display = escena.anterior ? "block" : "none";
             btnVolver.onclick = () => mostrarEscena(escena.anterior);
-
             txtPregunta.innerText = escena.texto;
-            
             if (escena.spotify) {
                 const link = document.createElement('a');
                 link.href = escena.spotify;
@@ -312,7 +308,6 @@
                 link.innerText = escena.spotify;
                 divBotones.appendChild(link);
             }
-
             escena.opciones.forEach(op => {
                 const btn = document.createElement('button');
                 btn.innerText = op.texto;
