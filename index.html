@@ -67,6 +67,382 @@
 
     <script>
 
+        const escenas = {
+            inicio: {
+        
+                texto: "Dejame tratar algo nuevo. ¿Estás dispuesta a jugar este juego?", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Si", siguiente: "pantalla2" }, { texto: "No", siguiente: "p1_1" }], anterior: null },
+
+            p1_1: { texto: "Dale no seas mala onda, dame una oportunidad...", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Bueno okey", siguiente: "pantalla2" }, { texto: "No molestes", siguiente: "p1_2" }], anterior: "inicio" },
+
+            p1_2: { texto: "En serio... solo un ratito. ¿Probamos?", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Dale, está bien", siguiente: "pantalla2" }, { texto: "Dije que no", siguiente: "p1_3" }], anterior: "p1_1" },
+
+            p1_3: { texto: "Soy persistente porque vale la pena. ¿Me dejás mostrarte?", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "A ver...", siguiente: "pantalla2" }, { texto: "Pesado eh...", siguiente: "p1_4" }], anterior: "p1_2" },
+
+            p1_4: { texto: "Ya no hay botón de No. ¡Ahora sí o sí tenés que avanzar! 😂", imagen: "AAAfoto1.jpeg", opciones: [{ texto: "Avanzar por fin", siguiente: "pantalla2" }], anterior: "p1_3" },
+
+            pantalla2: { texto: "Dicen que el amor es servicial, dicen que el amor es paciente, incondicional y que todo lo espera.", imagen: "aaafoto5.jpeg", opciones: [{ texto: "No me chamuyes dale que queres", siguiente: "pantalla3" }, { texto: "Okey te voy a seguir la corriente", siguiente: "pantalla3" }], anterior: "inicio" },
+
+            pantalla3: { texto: "Tenemos que empezar por lo principal, por himnos cantos y flores.\n\nHe aquí 3 grandes cualidades que admiro de vos Mili:\n\n1. Sos la persona más fuerte que conozco.\n2. Tu perseverancia en las cosas y tu deslumbrante inteligencia.\n3. Tu natural belleza y tu gracia.", imagen: "aaafoto2.jpeg", opciones: [{ texto: "Gracias te quiero", siguiente: "pantalla4" }, { texto: "Ya sabía pero que lindo q te lo digan", siguiente: "pantalla4" }], anterior: "pantalla2" },
+
+            pantalla4: { texto: "¿Pero como llegué a entender y descubrir esto? Dejame contarte brevemente.", imagen: "", opciones: [{ texto: "¡Vamos!", siguiente: "pantalla5" }], anterior: "pantalla3" },
+
+            pantalla5: { texto: "He aquí una de nuestras primeras grandes aventuras. Pongo esta foto porque este regalo creo nacio de la confianza de haber pasado un mes juntos conociendonos. Nos conocimos en varios niveles. De 0 pasamos a compartir chistes, aventuras por el campo y también espacios espirituales.", imagen: "aaafoto3.jpeg", opciones: [{ texto: "2 meses dejaste el rompecabezas en casa caradura...", siguiente: "pantalla6_1" }], anterior: "pantalla4" },
+
+
+
+pantalla6_1: { 
+
+                texto: "De todos los regalos hermosos que me hiciste, uno de los que más disfruto recordar o quedarme en el corazón es este... Mi corazón se derritió cuando leí esa notita (y gracias a Dios no fue la última vez)", 
+
+                imagen: "", 
+
+                opciones: [
+
+                    { texto: "La verdad que soy re tierna sí", siguiente: "pantalla6" }, 
+
+                    { texto: "¿mmmm de cuál de todos hablas?", siguiente: "pantalla6_2" }
+
+                ], 
+
+                anterior: "pantalla5" 
+
+            },
+
+            pantalla6_2: { 
+
+                texto: "Realmente me estabas regalando tiempo, tiempo que al principio me parecia basico y con el pasar de las citas lo fui atesorando mas y mas. Hoy como dice un amigo mio <<Me falta el aire si no estas>>", 
+
+                opciones: [{ texto: "Queremos volver a ver el regalito dale", siguiente: "pantalla6" }],  
+
+                anterior: "pantalla6_1" 
+
+            },
+
+            pantalla6: { 
+
+                texto: "Mi regalo no es el rompecabezas sino el tiempo que nos lleve armarlo\n\nHoy todos los dias al trabajar veo el rompecabezas, me rio y sonrio", 
+
+                imagen: "aaafoto10.jpeg", 
+
+                opciones: [
+
+                    { texto: "Que bonito regalo", siguiente: "pantalla7" }, 
+
+                    { texto: "Nos costo armarlo y valio la pena je", siguiente: "pantalla6_4" }
+
+                ], 
+
+                anterior: "pantalla6_2" 
+
+            },
+
+            pantalla6_4: { 
+
+                texto: "Directo desde Pemberly, Derbyshire, acá hay pruebas de lo mucho que uno puede disfrutar de la Mili novia y enamorada, ocurrente y graciosa, siempre con sus tonos tan originales. PD: hermosa tu remera.",
+
+                video: "aaavideo5.mp4", 
+
+                opciones: [{ texto: "Ji, dale contame mas me esta gustando", siguiente: "pantalla7" }],  
+
+                anterior: "pantalla6" 
+
+            },
+
+            pantalla7: { 
+
+                texto: "Desde entonces Pasamos cumpleaños juntos, el retiro, distancia de viajes, aprendimos a tomar aperols, bastoncitos de muzarella, pasamos por lugares como el mercado norte y tambien Potrerillo de Larreta. 10 meses o 10 dias o 10 años, ya no se", 
+
+                imagen: "aaafoto8.png", 
+
+                opciones: [{ texto: "la vida pasa", siguiente: "pantalla8" }], 
+
+                anterior: "pantalla6" 
+
+            },
+
+            pantalla8: { 
+
+                texto: "este video es nuevo pero con esa remera y nuestra actitud se representan estos meses que hemos vivido juntos", 
+
+                video: "aaavideo1.mp4", 
+
+                opciones: [
+
+                    { texto: "aprendiste a programar para todo esto?", siguiente: "pantalla9" }, 
+
+                    { texto: "no puedo creer que me regalaste esa remera", siguiente: "pantalla9" }, 
+
+                    { texto: "sos un idiota pero se que me queres mucho", siguiente: "pantalla9" }
+
+                ], 
+
+                anterior: "pantalla7" 
+
+            },
+
+            pantalla9: { 
+
+                texto: "Para hacer una pausa dinamica quiero decir que ademas de esta bella presentacion deberias haber recibido unas flores hoy. A esto me comprometi cuando hacia esta pagina, si no te regalo flores el fran del futuro entonces pegale un poco, pero si te regalo entonces miralo con ojitos chinos, mordete los labios un poco y decile que es un tonto.", 
+
+                imagen: "aaafoto5.jpeg", 
+
+                opciones: [
+
+                    { texto: "Me regalo estan re lindas as always", siguiente: "pantalla10" }, 
+
+                    { texto: "Salame se olvido (imposible)", siguiente: "pantalla10" }, 
+
+                    { texto: "Fran del pasado sos un salame tambien", siguiente: "pantalla10" }
+
+                ], 
+
+                anterior: "pantalla8" 
+
+            },
+
+            pantalla10: { 
+
+                texto: "bueno hora de una decisión, esta vez te agarré porque si no elegís no avanzás...", 
+
+                imagen: "aaafoto11.webp", 
+
+                opciones: [
+
+                    { texto: "Perdonar al Fran :o ", siguiente: "pantalla10_1" }, 
+
+                    { texto: "No tomar nunca más Aperols", siguiente: "pantalla10_22" }
+
+                ], 
+
+                anterior: "pantalla9" 
+
+            },
+
+            pantalla10_22: { 
+
+                texto: "bueno lastima no va a pasar elegi de vuelta", 
+
+                imagen: "aaafoto11.webp", 
+
+                opciones: [{ texto: "elegir de vuelta", siguiente: "pantalla10" }], 
+
+                anterior: "pantalla10" 
+
+            },
+
+            pantalla10_1: { 
+
+                texto: "Muy bien, significa que todavía nos quedan chances, vamos a ver si son altas o bajas... ¿Qué preferís?", 
+
+                imagen: "aaafoto11.webp", 
+
+                opciones: [
+
+                    { texto: "perdonar al Fran", siguiente: "pantalla10_2" }, 
+
+                    { texto: "No comer nunca más entrañita o lomo al champiñon", siguiente: "pantalla10_21" }
+
+                ], 
+
+                anterior: "pantalla10" 
+
+            },
+
+            pantalla10_21: { 
+
+                texto: "bueno lástima no va a pasar elegi de vuelta", 
+
+                imagen: "aaafoto11.webp", 
+
+                opciones: [{ texto: "elegir de vuelta", siguiente: "pantalla10_1" }], 
+
+                anterior: "pantalla10_1" 
+
+            },
+
+            pantalla10_2: { 
+
+                texto: "okey, venimos mejor de lo que pensaba, vamos a dejar un último -Que preferis- para el final...", 
+
+                imagen: "aaafoto11.webp", 
+
+                opciones: [
+
+                    { texto: "Sigamos. A ver q mas preparaste", siguiente: "pantalla10_3" }, 
+
+                    { texto: "emm... y el final?", siguiente: "pantalla10_3" }
+
+                ], 
+
+                anterior: "pantalla10_1" 
+
+            },
+
+            pantalla10_3: { 
+
+                texto: "Llegando al final... \n\nTodo este jueguito y demás eran para recordar pero tambien para decirte algunas cosas. \nTambien para ver tu sonrisa, espero que alguna de las pantallas te la hayan sacado.", 
+
+                imagen: "aaafoto6.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla11" }], 
+
+                anterior: "pantalla10_2" 
+
+            },
+
+            pantalla11: { 
+
+                texto: "Desearnos unos felices 10 meses, felices tal vez no que nos estemos riendo o que todo este perfecto, pero felices porque ya nos encontramos, ahora solo queda la parte facil que es mantenernos en la vida del otro", 
+
+                imagen: "aaafoto30.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla12" }], 
+
+                anterior: "pantalla10_3" 
+
+            },
+
+            pantalla12: { 
+
+                texto: "A mi me gusta realmente recordar el pasado, no para vivir alla sino para saberse agradecido. Agradezco tu presencia en mi vida y reconozco el gran impacto que tenes. No es chamuyo, de alguna manera me has acercado a Jesús, a mi familia, a mis amigos, me hiciste mejor persona, todo eso al lado tuyo", 
+
+                imagen: "aaafoto31.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla13" }], 
+
+                anterior: "pantalla11" 
+
+            },
+
+            pantalla13: { 
+
+                texto: "Bueno tambien me hiciste mas paciente, a no contar chistes boludos en las mesas, a no abrir la heladera sin permiso, a comer cookies, a salir a caminar por el barrio, a pasear un perro, a tomar aperols, a comer a rancho viejo, a manejar y buscar a una lady todo el tiempo y muchas cosas mas que son RE divertidas je", 
+
+                imagen: "aaafoto35.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla14" }], 
+
+                anterior: "pantalla12" 
+
+            },
+
+            pantalla14: { 
+
+                texto: "Pero enserio: te sigo admirando como cuando te conoci, como dije al principio, admiro algunas cosas evidentes como tu inteligencia y tu belleza, pero otras cosas que fui aprendiendo como tu gran fortaleza como mujer. Rezo todos los dias por vos, para que seas santa, para que seas feliz.", 
+
+                imagen: "aaafoto33.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla15" }], 
+
+                anterior: "pantalla13" 
+
+            },
+
+            pantalla15: { 
+
+                texto: "Te prometo de mi lado, para corresponder con lo que mereces y la mujer que sos, algunas cosas que le robe a alguien a quien conoces y queres mucho. No es el señor Darcy pero es alguien con un tono mas realista aunque no quita lo idealezco.\n\nTe prometo un amor que todo lo soporte, me refiero un amor que siga intentando, que este dispuesto, que no le tenga miedo a los obstaculos, te prometo que mientras la conciencia me pida, voy a amarte a pesar de las dificultades que podamos atravesar, ya sea como pareja o incluso lo que te pueda pasar a vos, tratar con sinceridad de corazón apoyarte.", 
+
+                imagen: "aaafoto32.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla16" }], 
+
+                anterior: "pantalla14" 
+
+            },
+
+            pantalla16: { 
+
+                texto: "te prometo tambien un amor paciente y bondadoso, un amor lleno de amor valga la redundancia, lleno de cariño, de consideraciones, de atencion, de respeto y cuidado. Un amor que haga que nuestro amor dure hasta que seamos viejitos. \n\nNo lo digo a la ligera, no creo estar a la altura de mi promesa pero no la hago porque ya la este cumpliendo sino porque quiero empezar a cumplirla.", 
+
+                imagen: "aaafoto38.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla17" }], 
+
+                anterior: "pantalla15" 
+
+            },
+
+            pantalla17: { 
+
+                texto: "Ahora si, despues de declarar mi amor, una cosita mas... ", 
+
+                imagen: "aaafoto36.jpeg", 
+
+                opciones: [{ texto: "siguiente", siguiente: "pantalla18" }], 
+
+                anterior: "pantalla16" 
+
+            },
+
+            pantalla18: { 
+
+                texto: "que preferis", 
+
+                imagen: "aaafoto6.jpeg", 
+
+                opciones: [
+
+                    { texto: "que te reciten un poema", siguiente: "pantalla19" }, 
+
+                    { texto: "que te dediquen una cancion", siguiente: "pantalla20" }
+
+                ], 
+
+                anterior: "pantalla17" 
+
+            },
+
+            pantalla19: { 
+
+                texto: "mira al salame de tu novio y espera que saque algo del bolsillo", 
+
+                imagen: "aaafoto6.jpeg", 
+
+                opciones: [
+
+                    { texto: "ok y lo otro?", siguiente: "pantalla20" }, 
+
+                    { texto: "fiiin finalisimo", siguiente: "pantalla21" }
+
+                ], 
+
+                anterior: "pantalla18" 
+
+            },
+
+            pantalla20: { 
+
+                texto: "Todo indica que esta es la canción para dedicarte en estos 10 meses. Ahora vos dedicame su show cantandola", 
+
+                spotify: "https://open.spotify.com/intl-es/track/0Uat97UZ4mEiSByu9C69vY?si=cc6c8f4951474149", 
+
+                opciones: [
+
+                    { texto: "y lo otroooo?", siguiente: "pantalla19" }, 
+
+                    { texto: "fiiiin, final", siguiente: "pantalla21" }
+
+                ], 
+
+                anterior: "pantalla18" 
+
+            },
+
+            pantalla21: { 
+
+                texto: "fin, perdon por tan poco. Te amo, espero que te sientas tan feliz de estar conmigo como yo lo estoy con vos", 
+
+                video: "aaavideo3.mp4", 
+
+                loop: true, 
+
+                opciones: [{ texto: "Volver al inicio", siguiente: "inicio" }], 
+
+                anterior: "pantalla19" 
+
+            }
+
+        };
 
         const escenas = {
             inicio: {
