@@ -12,6 +12,7 @@
             background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
             overflow-x: hidden;
         }
+
         #contenedor { 
             position: relative; background: rgba(255, 255, 255, 0.98); 
             padding: 20px; border-radius: 25px; width: 90%; 
@@ -19,38 +20,52 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.2);
             display: flex; flex-direction: column; align-items: center;
             margin: 20px 0;
+            /* Transición suave para el cambio de tamaño */
+            transition: all 0.5s ease;
         }
+
+        /* ANIMACIÓN DE ENTRADA (Fade-in) */
+        @keyframes aparecer {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animar-contenido {
+            animation: aparecer 0.6s ease-out;
+        }
+
         #marco-foto {
             width: 100%; height: 0; padding-bottom: 125%; 
             background-size: contain; background-position: center;
             background-repeat: no-repeat; border-radius: 15px;
             margin-bottom: 20px; display: none;
         }
+
         video { border-radius: 15px; width: 100%; max-height: 50vh; background: #000; margin-bottom: 15px; }
+
         #boton-volver { 
             position: absolute; top: 15px; left: 15px; 
             background: none; border: none; color: #d63384; 
             font-size: 1.1rem; cursor: pointer; display: none; 
             font-weight: bold; z-index: 10;
         }
+
         h2 { font-size: 1.05rem; color: #333; line-height: 1.6; white-space: pre-line; margin-bottom: 20px; }
+        
         .botones-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        
         button.opcion { 
             padding: 15px; font-size: 14px; border: none; 
             border-radius: 12px; background-color: #d63384; 
-            color: white; cursor: pointer; transition: transform 0.2s; 
+            color: white; cursor: pointer; transition: transform 0.2s, background 0.2s; 
         }
+
         button.opcion:active { transform: scale(0.95); }
-        /* ESTILO DEL BOTÓN DE SPOTIFY */
+
         .btn-spotify { 
-            background-color: #1DB954 !important; 
-            color: white !important; 
-            font-weight: bold; 
-            text-decoration: none; 
-            padding: 15px; 
-            border-radius: 12px; 
-            display: block; 
-            margin-bottom: 12px; 
+            background-color: #1DB954 !important; color: white !important; 
+            font-weight: bold; text-decoration: none; padding: 15px; 
+            border-radius: 12px; display: block; margin-bottom: 12px; 
             transition: transform 0.2s;
         }
         .btn-spotify:active { transform: scale(0.95); }
@@ -446,9 +461,10 @@
 
         
 
-        function mostrarEscena(nombre) {
+       function mostrarEscena(nombre) {
             const escena = escenas[nombre];
             if (!escena) return;
+
             const marco = document.getElementById('marco-foto');
             const vCont = document.getElementById('video-cont');
             const btnVolver = document.getElementById('boton-volver');
@@ -471,12 +487,13 @@
 
             btnVolver.style.display = escena.anterior ? "block" : "none";
             btnVolver.onclick = () => mostrarEscena(escena.anterior);
+
             txtPregunta.innerText = escena.texto;
             
             if (escena.spotify) {
                 const link = document.createElement('a');
                 link.href = escena.spotify;
-                link.className = 'btn-spotify'; // USA LA NUEVA CLASE VERDE
+                link.className = 'btn-spotify';
                 link.target = '_blank';
                 link.innerText = "🎵 Escuchar en Spotify";
                 divBotones.appendChild(link);
@@ -489,6 +506,12 @@
                 btn.onclick = () => mostrarEscena(op.siguiente);
                 divBotones.appendChild(btn);
             });
+
+            // LÍNEAS PARA LA TRANSICIÓN:
+            const contenedor = document.getElementById('contenedor');
+            contenedor.classList.remove('animar-contenido');
+            void contenedor.offsetWidth; // Truco para reiniciar la animación
+            contenedor.classList.add('animar-contenido');
         }
         mostrarEscena('inicio');
     </script>
